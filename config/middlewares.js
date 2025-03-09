@@ -9,4 +9,8 @@ module.exports = [
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
+  {
+    name: 'api::middleware.plan-restrictions',
+    config: {},
+  },
 ];

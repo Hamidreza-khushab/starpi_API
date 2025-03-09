@@ -61,6 +61,8 @@ The system is built with the following technologies:
 - Blog Posts
 - Blog Categories
 - Blog Tags
+- Transactions
+- Invoices
 
 ## 🚀 Getting Started
 
@@ -85,7 +87,7 @@ yarn install
 ```
 
 3. Configure the database
-Create a `.env` file in the root directory with the following content:
+Create a `.env` file in the root directory based on the `.env.example` file:
 ```
 HOST=0.0.0.0
 PORT=1337
@@ -102,6 +104,25 @@ DATABASE_PORT=3306
 DATABASE_NAME=restaurant_app
 DATABASE_USERNAME=<your-database-username>
 DATABASE_PASSWORD=<your-database-password>
+
+# Payment Gateways
+# PayPal
+PAYPAL_API_KEY=<your-paypal-api-key>
+PAYPAL_API_SECRET=<your-paypal-api-secret>
+PAYPAL_WEBHOOK_SECRET=<your-paypal-webhook-secret>
+
+# Visa
+VISA_API_KEY=<your-visa-api-key>
+VISA_API_SECRET=<your-visa-api-secret>
+VISA_WEBHOOK_SECRET=<your-visa-webhook-secret>
+
+# Mastercard
+MASTERCARD_API_KEY=<your-mastercard-api-key>
+MASTERCARD_API_SECRET=<your-mastercard-api-secret>
+MASTERCARD_WEBHOOK_SECRET=<your-mastercard-webhook-secret>
+
+# Platform Settings
+PLATFORM_FEE_PERCENTAGE=0.15
 ```
 
 4. Create the database
@@ -165,9 +186,77 @@ The system offers three subscription plans for restaurants:
 - Advanced reports enabled
 - Unlimited description length
 
+## 🔒 Plan Restrictions
+
+The system enforces subscription plan restrictions at the controller level. This ensures that restaurants can only access features and resources according to their subscription plan. The restrictions include:
+
+- Maximum number of menu items
+- Maximum number of images and videos
+- Access to additional languages
+- Access to reviews, discounts, and live chat features
+- Maximum description length
+- Access to advanced reports
+
+## 📊 Advanced Reporting
+
+The system provides advanced reporting capabilities for restaurants with the Advanced subscription plan. The reports include:
+
+### Sales Reports
+- Daily, weekly, monthly, and yearly sales reports
+- Comparison with previous periods
+- Top-selling menu items
+- Sales by hour of day
+- Revenue prediction based on historical data
+
+### Customer Reports
+- Customer spending analysis
+- Order frequency
+- Average order value
+- Customer loyalty metrics
+
+### Settlement Reports
+- Platform fee calculations
+- Restaurant payout details
+- Transaction history
+
+## 💳 Payment Management
+
+The system integrates with multiple payment gateways to process payments for orders and subscriptions:
+
+- PayPal
+- Visa
+- Mastercard
+
+The payment system includes:
+
+- Transaction recording
+- Invoice generation
+- Automatic subscription renewal
+- Payment webhooks for real-time updates
+- Restaurant settlement calculations
+
+## ⏱️ Automated Tasks
+
+The system includes automated tasks that run on a schedule:
+
+- Subscription renewal (daily at 1:00 AM)
+- Invoice reminders for overdue invoices (daily at 2:00 AM)
+
 ## 📚 Documentation
 
 For more information about Strapi, check out the following resources:
 - [Strapi Documentation](https://docs.strapi.io)
 - [Strapi Tutorials](https://strapi.io/tutorials)
 - [Strapi Blog](https://strapi.io/blog)
+
+## 🧩 API Endpoints
+
+### Report Endpoints
+- `GET /reports/sales/:restaurantId` - Generate a sales report
+- `GET /reports/customers/:restaurantId` - Generate a customer report
+- `GET /reports/settlement/:restaurantId` - Generate a settlement report
+
+### Payment Webhook Endpoints
+- `POST /payment/webhooks/paypal` - Handle PayPal webhook
+- `POST /payment/webhooks/visa` - Handle Visa webhook
+- `POST /payment/webhooks/mastercard` - Handle Mastercard webhook
