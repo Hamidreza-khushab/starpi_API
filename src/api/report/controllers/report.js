@@ -40,7 +40,7 @@ module.exports = {
       }
 
       // Generate sales report
-      const salesService = strapi.service('api::services.reporting.sales');
+      const salesService = strapi.service('api::reporting.sales');
       const report = await salesService.getSalesReport(restaurantId, {
         period,
         startDate,
@@ -90,7 +90,7 @@ module.exports = {
       }
 
       // Get orders for the restaurant in the date range
-      const baseService = strapi.service('api::services.reporting.base');
+      const baseService = strapi.service('api::reporting.base');
       let { startDate: reportStartDate, endDate: reportEndDate } = startDate && endDate 
         ? { startDate: new Date(startDate), endDate: new Date(endDate) }
         : baseService.getDateRange(period || 'monthly');
@@ -208,7 +208,7 @@ module.exports = {
       }
 
       // Generate settlement report
-      const paymentService = strapi.service('api::services.payment');
+      const paymentService = strapi.service('api::payment.payment');
       const settlement = await paymentService.calculateRestaurantSettlement(restaurantId, {
         startDate: startDate ? new Date(startDate) : undefined,
         endDate: endDate ? new Date(endDate) : undefined

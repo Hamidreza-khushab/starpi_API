@@ -325,7 +325,7 @@ module.exports = {
         });
         
         if (order) {
-          const paymentService = strapi.service('api::services.payment');
+          const paymentService = strapi.service('api::payment.payment');
           await paymentService.generateInvoice({
             restaurantId: order.restaurant?.id,
             orderId: order.id,
@@ -389,7 +389,7 @@ module.exports = {
       
       // If payment is successful, generate invoice
       if (status === 'paid') {
-        const paymentService = strapi.service('api::services.payment');
+        const paymentService = strapi.service('api::payment.payment');
         await paymentService.generateInvoice({
           restaurantId: subscription.restaurant?.id,
           subscriptionId: subscription.id,

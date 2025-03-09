@@ -689,6 +689,58 @@ export interface ApiDiscountDiscount extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiInvoiceInvoice extends Struct.CollectionTypeSchema {
+  collectionName: 'invoices';
+  info: {
+    description: 'Invoice records for payments';
+    displayName: 'Invoice';
+    pluralName: 'invoices';
+    singularName: 'invoice';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    customer: Schema.Attribute.JSON & Schema.Attribute.Required;
+    dueDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    invoiceNumber: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    issueDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    items: Schema.Attribute.JSON & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::invoice.invoice'
+    > &
+      Schema.Attribute.Private;
+    notes: Schema.Attribute.Text;
+    order: Schema.Attribute.Relation<'manyToOne', 'api::order.order'>;
+    paidDate: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    restaurant: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::restaurant.restaurant'
+    >;
+    status: Schema.Attribute.Enumeration<
+      ['draft', 'issued', 'paid', 'overdue', 'cancelled']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'draft'>;
+    subscription: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::subscription.subscription'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiLanguageLanguage extends Struct.CollectionTypeSchema {
   collectionName: 'languages';
   info: {
@@ -905,6 +957,7 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     discountAmount: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     discountCode: Schema.Attribute.String;
     estimatedDeliveryTime: Schema.Attribute.DateTime;
+    invoices: Schema.Attribute.Relation<'oneToMany', 'api::invoice.invoice'>;
     items: Schema.Attribute.JSON & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'> &
@@ -935,6 +988,10 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'pending'>;
     totalAmount: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    transactions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::transaction.transaction'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1053,6 +1110,7 @@ export interface ApiRestaurantRestaurant extends Struct.CollectionTypeSchema {
     discounts: Schema.Attribute.Relation<'oneToMany', 'api::discount.discount'>;
     email: Schema.Attribute.Email & Schema.Attribute.Required;
     images: Schema.Attribute.Media<'images', true>;
+    invoices: Schema.Attribute.Relation<'oneToMany', 'api::invoice.invoice'>;
     isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     languages: Schema.Attribute.JSON;
     locale: Schema.Attribute.String;
@@ -1106,6 +1164,10 @@ export interface ApiRestaurantRestaurant extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    transactions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::transaction.transaction'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1305,6 +1367,7 @@ export interface ApiSubscriptionSubscription
     invoiceNumber: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    invoices: Schema.Attribute.Relation<'oneToMany', 'api::invoice.invoice'>;
     isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1334,6 +1397,66 @@ export interface ApiSubscriptionSubscription
       'api::restaurant.restaurant'
     >;
     startDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    transactions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::transaction.transaction'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTransactionTransaction extends Struct.CollectionTypeSchema {
+  collectionName: 'transactions';
+  info: {
+    description: 'Payment transaction records';
+    displayName: 'Transaction';
+    pluralName: 'transactions';
+    singularName: 'transaction';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currency: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 3;
+        minLength: 3;
+      }>;
+    description: Schema.Attribute.String & Schema.Attribute.Required;
+    gateway: Schema.Attribute.Enumeration<
+      ['paypal', 'visa', 'mastercard', 'other']
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::transaction.transaction'
+    > &
+      Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON;
+    order: Schema.Attribute.Relation<'manyToOne', 'api::order.order'>;
+    publishedAt: Schema.Attribute.DateTime;
+    restaurant: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::restaurant.restaurant'
+    >;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'completed', 'failed', 'refunded']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
+    subscription: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::subscription.subscription'
+    >;
+    transactionId: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1876,6 +1999,7 @@ declare module '@strapi/strapi' {
       'api::blog-tag.blog-tag': ApiBlogTagBlogTag;
       'api::chat.chat': ApiChatChat;
       'api::discount.discount': ApiDiscountDiscount;
+      'api::invoice.invoice': ApiInvoiceInvoice;
       'api::language.language': ApiLanguageLanguage;
       'api::menu-category.menu-category': ApiMenuCategoryMenuCategory;
       'api::menu-item.menu-item': ApiMenuItemMenuItem;
@@ -1885,6 +2009,7 @@ declare module '@strapi/strapi' {
       'api::review.review': ApiReviewReview;
       'api::subscription-plan.subscription-plan': ApiSubscriptionPlanSubscriptionPlan;
       'api::subscription.subscription': ApiSubscriptionSubscription;
+      'api::transaction.transaction': ApiTransactionTransaction;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

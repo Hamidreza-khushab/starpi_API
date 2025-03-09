@@ -11,7 +11,7 @@ module.exports = {
       path: '/reports/sales/:restaurantId',
       handler: 'report.salesReport',
       config: {
-        policies: ['global::is-authenticated'],
+        policies: [],
         description: 'Generate a sales report for a restaurant',
         tag: {
           plugin: 'reports',
@@ -24,7 +24,7 @@ module.exports = {
       path: '/reports/customers/:restaurantId',
       handler: 'report.customerReport',
       config: {
-        policies: ['global::is-authenticated'],
+        policies: [],
         description: 'Generate a customer report for a restaurant',
         tag: {
           plugin: 'reports',
@@ -37,7 +37,7 @@ module.exports = {
       path: '/reports/settlement/:restaurantId',
       handler: 'report.settlementReport',
       config: {
-        policies: ['global::is-authenticated'],
+        policies: [],
         description: 'Generate a settlement report for a restaurant',
         tag: {
           plugin: 'reports',

@@ -52,7 +52,7 @@ module.exports = {
           strapi.log.info(`Processing renewal for subscription ${subscription.id}`);
           
           // Get payment service
-          const paymentService = strapi.service('api::services.payment');
+          const paymentService = strapi.service('api::payment.payment');
           
           // Process renewal
           await paymentService.processSubscriptionRenewal(subscription.id);
