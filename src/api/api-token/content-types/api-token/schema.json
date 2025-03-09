@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "api_tokens",
+  "info": {
+    "singularName": "api-token",
+    "pluralName": "api-tokens",
+    "displayName": "API Token",
+    "description": "API tokens for different access levels"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "description": "Name of the token for identification"
+    },
+    "token": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "private": true,
+      "description": "The actual token value"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "admin",
+        "restaurant",
+        "customer"
+      ],
+      "required": true,
+      "description": "Type of token (admin, restaurant, customer)"
+    },
+    "restaurant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::restaurant.restaurant",
+      "description": "Associated restaurant (for restaurant and customer tokens)"
+    },
+    "permissions": {
+      "type": "json",
+      "description": "Specific permissions granted to this token"
+    },
+    "expiresAt": {
+      "type": "datetime",
+      "description": "When the token expires (null for never)"
+    },
+    "lastUsed": {
+      "type": "datetime",
+      "description": "When the token was last used"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the token is active"
+    },
+    "description": {
+      "type": "text",
+      "description": "Description of what the token is used for"
+    },
+    "ipRestrictions": {
+      "type": "json",
+      "description": "IP addresses allowed to use this token"
+    },
+    "createdBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "description": "User who created the token"
+    }
+  }
+}

@@ -9,4 +9,12 @@ module.exports = [
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
+  {
+    name: 'global::token-auth',
+    config: {},
+  },
+  {
+    name: 'global::api-version',
+    config: {},
+  },
 ];

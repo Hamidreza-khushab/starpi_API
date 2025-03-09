@@ -1,0 +1,97 @@
+{
+  "kind": "collectionType",
+  "collectionName": "restaurant_apps",
+  "info": {
+    "singularName": "restaurant-app",
+    "pluralName": "restaurant-apps",
+    "displayName": "Restaurant App",
+    "description": "Information about restaurant-specific mobile applications"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "restaurant": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::restaurant.restaurant"
+    },
+    "brandingInfo": {
+      "type": "json",
+      "required": true,
+      "description": "Colors, logo, and other branding information"
+    },
+    "androidVersion": {
+      "type": "string",
+      "description": "Current Android app version"
+    },
+    "iosVersion": {
+      "type": "string",
+      "description": "Current iOS app version"
+    },
+    "customizationSettings": {
+      "type": "json",
+      "description": "App customization settings"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the app is active or not"
+    },
+    "androidDownloadLink": {
+      "type": "string",
+      "description": "Link to download the Android app"
+    },
+    "iosDownloadLink": {
+      "type": "string",
+      "description": "Link to download the iOS app"
+    },
+    "appIcon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "App icon image"
+    },
+    "splashScreen": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "App splash screen image"
+    },
+    "appScreenshots": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "App screenshots for store listings"
+    },
+    "lastUpdated": {
+      "type": "datetime",
+      "description": "When the app was last updated"
+    },
+    "appDescription": {
+      "type": "richtext",
+      "description": "Description of the app for store listings"
+    },
+    "appFeatures": {
+      "type": "json",
+      "description": "List of app features"
+    },
+    "minimumOsVersion": {
+      "type": "json",
+      "description": "Minimum OS version required for Android and iOS"
+    },
+    "appReviews": {
+      "type": "json",
+      "description": "App store reviews and ratings"
+    }
+  }
+}

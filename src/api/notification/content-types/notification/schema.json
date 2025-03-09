@@ -1,0 +1,98 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notifications",
+  "info": {
+    "singularName": "notification",
+    "pluralName": "notifications",
+    "displayName": "Notification",
+    "description": "System and user notifications"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "description": "Notification title"
+    },
+    "message": {
+      "type": "text",
+      "required": true,
+      "description": "Notification message content"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "system",
+        "restaurant",
+        "customer"
+      ],
+      "required": true,
+      "description": "Type of notification"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "unread",
+        "read",
+        "archived"
+      ],
+      "default": "unread",
+      "description": "Status of the notification"
+    },
+    "priority": {
+      "type": "enumeration",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium",
+      "description": "Priority level of the notification"
+    },
+    "sender": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "description": "User who sent the notification"
+    },
+    "recipient": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "description": "User who receives the notification"
+    },
+    "restaurant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::restaurant.restaurant",
+      "description": "Associated restaurant (if applicable)"
+    },
+    "data": {
+      "type": "json",
+      "description": "Additional data related to the notification"
+    },
+    "readAt": {
+      "type": "datetime",
+      "description": "When the notification was read"
+    },
+    "expiresAt": {
+      "type": "datetime",
+      "description": "When the notification expires (null for never)"
+    },
+    "actionUrl": {
+      "type": "string",
+      "description": "URL to navigate to when the notification is clicked"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category of the notification for filtering"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon to display with the notification"
+    }
+  }
+}

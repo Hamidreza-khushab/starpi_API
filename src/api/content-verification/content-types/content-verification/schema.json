@@ -1,0 +1,87 @@
+{
+  "kind": "collectionType",
+  "collectionName": "content_verifications",
+  "info": {
+    "singularName": "content-verification",
+    "pluralName": "content-verifications",
+    "displayName": "Content Verification",
+    "description": "Verification requests for restaurant-submitted content"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "contentType": {
+      "type": "string",
+      "required": true,
+      "description": "Type of content being verified (e.g., menu-item, restaurant-info)"
+    },
+    "contentId": {
+      "type": "integer",
+      "required": true,
+      "description": "ID of the content being verified"
+    },
+    "restaurant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::restaurant.restaurant",
+      "required": true,
+      "description": "Restaurant that submitted the content"
+    },
+    "submittedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "description": "User who submitted the content"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "required": true,
+      "description": "Status of the verification request"
+    },
+    "reviewedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "description": "Admin who reviewed the content"
+    },
+    "reviewedAt": {
+      "type": "datetime",
+      "description": "When the content was reviewed"
+    },
+    "rejectionReason": {
+      "type": "text",
+      "description": "Reason for rejection (if rejected)"
+    },
+    "contentSnapshot": {
+      "type": "json",
+      "required": true,
+      "description": "Snapshot of the content at the time of submission"
+    },
+    "changes": {
+      "type": "json",
+      "description": "Changes made to the content during verification"
+    },
+    "notes": {
+      "type": "text",
+      "description": "Additional notes about the verification"
+    },
+    "priority": {
+      "type": "enumeration",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium",
+      "description": "Priority level of the verification request"
+    }
+  }
+}
