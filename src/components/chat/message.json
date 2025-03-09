@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_chat_messages",
+  "info": {
+    "displayName": "Message",
+    "description": "Chat message component"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "text",
+      "required": true
+    },
+    "sender": {
+      "type": "enumeration",
+      "enum": [
+        "customer",
+        "restaurant",
+        "admin"
+      ],
+      "required": true
+    },
+    "timestamp": {
+      "type": "datetime",
+      "required": true
+    },
+    "isRead": {
+      "type": "boolean",
+      "default": false
+    },
+    "attachment": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    }
+  }
+}

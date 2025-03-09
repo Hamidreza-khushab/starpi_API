@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chats",
+  "info": {
+    "singularName": "chat",
+    "pluralName": "chats",
+    "displayName": "Chat",
+    "description": "Chat messages between customers and restaurants"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": false
+    }
+  },
+  "attributes": {
+    "customer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "customerChats"
+    },
+    "restaurant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::restaurant.restaurant",
+      "inversedBy": "chats"
+    },
+    "messages": {
+      "type": "component",
+      "repeatable": true,
+      "component": "chat.message"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "lastMessageDate": {
+      "type": "datetime"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "order": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::order.order",
+      "inversedBy": "chats"
+    }
+  }
+}

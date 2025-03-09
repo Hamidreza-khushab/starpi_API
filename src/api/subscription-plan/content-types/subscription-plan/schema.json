@@ -1,0 +1,106 @@
+{
+  "kind": "collectionType",
+  "collectionName": "subscription_plans",
+  "info": {
+    "singularName": "subscription-plan",
+    "pluralName": "subscription-plans",
+    "displayName": "SubscriptionPlan",
+    "description": "Define different subscription plans for restaurants"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true
+    },
+    "restaurants": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::restaurant.restaurant",
+      "mappedBy": "subscriptionPlan"
+    },
+    "subscriptions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::subscription.subscription",
+      "mappedBy": "plan"
+    },
+    "description": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "richtext"
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "planType": {
+      "type": "enumeration",
+      "enum": [
+        "basic",
+        "normal",
+        "advanced"
+      ],
+      "required": true
+    },
+    "maxMenuItems": {
+      "type": "integer",
+      "default": 20,
+      "min": 0
+    },
+    "maxImages": {
+      "type": "integer",
+      "default": 5,
+      "min": 0
+    },
+    "maxVideos": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "allowAdditionalLanguages": {
+      "type": "boolean",
+      "default": false
+    },
+    "allowCustomization": {
+      "type": "boolean",
+      "default": false
+    },
+    "allowReviews": {
+      "type": "boolean",
+      "default": false
+    },
+    "allowDiscounts": {
+      "type": "boolean",
+      "default": false
+    },
+    "allowLiveChat": {
+      "type": "boolean",
+      "default": false
+    },
+    "allowAdvancedReports": {
+      "type": "boolean",
+      "default": false
+    },
+    "maxDescriptionLength": {
+      "type": "integer",
+      "default": 200,
+      "min": 0
+    }
+  }
+}

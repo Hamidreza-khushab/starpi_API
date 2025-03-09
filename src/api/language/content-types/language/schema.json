@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "languages",
+  "info": {
+    "singularName": "language",
+    "pluralName": "languages",
+    "displayName": "Language",
+    "description": "Languages available in the system"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": false
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "isDefault": {
+      "type": "boolean",
+      "default": false
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "flag": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "direction": {
+      "type": "enumeration",
+      "enum": [
+        "ltr",
+        "rtl"
+      ],
+      "default": "ltr",
+      "required": true
+    },
+    "dateFormat": {
+      "type": "string"
+    },
+    "timeFormat": {
+      "type": "string"
+    },
+    "translations": {
+      "type": "json"
+    },
+    "geoRestrictions": {
+      "type": "json"
+    }
+  }
+}
